@@ -2,6 +2,9 @@
 FROM node:22.21 AS builder
 WORKDIR /app
 
+# 更换 npm 源（例如使用淘宝镜像）
+RUN npm config set registry https://registry.npmmirror.com/
+
 # 安装 pnpm（若基础镜像未预装）
 RUN npm install -g pnpm
 
