@@ -1,0 +1,18 @@
+# 构建阶段
+FROM node:22.21 AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build  # 假设NestJS的构建命令是npm run build
+
+# 运行阶段
+FROM node:22.21
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY package*.json ./
+
+# 暴露NestJS内部端口（不对外直接暴露，仅内部通信）
+EXPOSE 3001
+CMD ["npm", "run", "start:prod"]  # 生产环境启动命令
