@@ -1,5 +1,5 @@
 # 构建阶段：使用包含 pnpm 的 Node 镜像
-FROM node:22.21-alpine AS builder
+FROM node:22.21-alpine3.21 AS builder
 WORKDIR /app
 
 # 更换 npm 源（例如使用淘宝镜像）
@@ -19,7 +19,7 @@ COPY . .
 RUN pnpm build  # 假设 NestJS 构建命令为 pnpm build
 
 # 运行阶段
-FROM node:22.21-alpine
+FROM node:22.21-alpine3.21
 WORKDIR /app
 
 # 安装 pnpm（运行阶段可能需要，视启动命令而定）
